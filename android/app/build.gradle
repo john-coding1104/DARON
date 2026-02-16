@@ -78,13 +78,26 @@ android {
     compileSdk rootProject.ext.compileSdkVersion
 
     namespace "com.daron"
+
     defaultConfig {
         applicationId "com.daron"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
         versionName "1.0"
+        
+        ndk {
+            abiFilters 'armeabi-v7a', 'arm64-v8a', 'x86', 'x86_64'
+        }
+        
+        externalNativeBuild {
+            cmake {
+                cppFlags "-std=c++17 -fexceptions -frtti"
+                arguments "-DANDROID_STL=c++_shared"
+            }
+        }
     }
+
     signingConfigs {
         debug {
             storeFile file('debug.keystore')
@@ -93,22 +106,28 @@ android {
             keyPassword 'android'
         }
     }
+
     buildTypes {
         debug {
             signingConfig signingConfigs.debug
         }
         release {
-            // Caution! In production, you need to generate your own keystore file.
-            // see https://reactnative.dev/docs/signed-apk-android.
             signingConfig signingConfigs.debug
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
     }
+
+    externalNativeBuild {
+        cmake {
+            path "CMakeLists.txt"
+            version "3.22.1"
+        }
+    }
 }
 
 dependencies {
-    // The version of react-native is set by the React Native Gradle Plugin
+    // React Native
     implementation("com.facebook.react:react-android")
 
     if (hermesEnabled.toBoolean()) {
