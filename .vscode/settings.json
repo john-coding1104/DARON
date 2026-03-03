@@ -10,5 +10,6 @@
         "node_modules": true,
         "android/build": true,
         ".gradle": true
-    }
+    },
+    "cmake.sourceDirectory": "C:/React-Native/Clone/DARON/android/app"
 }
