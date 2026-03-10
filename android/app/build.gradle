@@ -52,6 +52,9 @@ react {
 
     /* Autolinking */
     autolinkLibrariesWithApp()
+    
+    /* New Architecture */
+    newArchEnabled = project.ext.has("newArchEnabled") ? project.ext.newArchEnabled : false
 }
 
 /**
